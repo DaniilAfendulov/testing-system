@@ -1,0 +1,11 @@
+.loginForm {
+    width: 380px;
+    background-color: #EFEFF2;
+}
+.TitleBarBackgroundBrush {
+    background: linear-gradient(180deg, black, #4B4B4B);
+}
+.TitleBarText {
+    font-size: 22px;
+    background: linear-gradient(180deg, white, #8FC797);;
+}

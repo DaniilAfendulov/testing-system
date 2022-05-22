@@ -1,0 +1,15 @@
+@use 'title-bar.module';
+@use 'colors';
+.button {
+  width: 80px;
+  height: auto;
+  background: colors.$bar-background-color;
+  &:hover {
+    border-color: #32eafbbb;
+  }
+  span {
+    font-size: 14px;
+    font-weight: bold;
+    @include title-bar.fill-title(colors.$blue-color);
+  }
+}

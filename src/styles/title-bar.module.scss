@@ -1,0 +1,21 @@
+@use 'colors';
+@mixin text-fill-color($color){
+  -webkit-text-fill-color: $color;
+  -ms-text-fill-color: $color;
+  text-fill-color: $color;
+}
+@mixin fill-title($color){
+  background-color: $color;
+  background-image: $color;
+  background-clip: text;
+  @include text-fill-color(transparent);
+}
+.title-bar {
+  background: colors.$bar-background-color;
+  span {
+    font-size: 22px;
+    font-style: italic;
+    font-weight: bolder;
+    @include fill-title(colors.$bar-text-color);
+  }
+}
