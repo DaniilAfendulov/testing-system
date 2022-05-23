@@ -1,13 +1,13 @@
 import Button from '../Button/Button';
-import LoginFormStyles from "../../../styles/login-form.module.scss";
+import Styles from "../../../styles/login-form.module.scss";
 
 export const LoginForm = (props) => {
   return (
     <div className='d-flex justify-content-center m-3'>
-      <div className={[LoginFormStyles.form, 'd-block justify-content-center border border-2 border-dark'].join(' ')}  >
-        <div className={[LoginFormStyles['title-bar'], 'row m-0'].join(' ')} >
+      <div className={[Styles.form, 'd-block justify-content-center border border-2 border-dark'].join(' ')}  >
+        <div className={[Styles['title-bar'], 'row m-0'].join(' ')} >
           <div className='col-4'>
-            <img src={props.icon} className='float-start align-top m-0' height='50px' alt=''></img>
+            <img src={props.icon} className='float-start align-top' alt=''></img>
           </div>
           <header className='col-4 d-flex justify-content-center'>
             <span className='m-auto'>Авторизация</span>

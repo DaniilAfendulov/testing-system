@@ -1,8 +1,8 @@
-
+import Styles from '../../styles/ControlsPanel/horizontal-separator.module.scss';
 
 const HorizontalSeparator = () => {
   return (
-    <div className="horizontal-separator w-100"></div>
+    <div className={Styles['horizontal-separator']}></div>
   )
 }
 

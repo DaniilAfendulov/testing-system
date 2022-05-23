@@ -1,0 +1,15 @@
+@use '../title-bar.module';
+.top-panel {
+  height: fit-content;
+  color: white;
+  background-image: url('../../resources/Images/topPanelBack.jpg');
+  width: 100%;
+  .title-bar{
+    background-image: inherit;
+    width: 100%;
+    text-align: center;
+    span{
+      font-size: 2.8em;
+    }
+  }
+}

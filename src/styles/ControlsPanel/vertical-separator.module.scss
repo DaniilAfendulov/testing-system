@@ -1,0 +1,7 @@
+@use '../colors' as c;
+.vertical-separator {
+  margin: 0 .2em 0 .2em;
+  background-color: c.$separator-color;
+  width: 1px;
+  height: auto;
+}

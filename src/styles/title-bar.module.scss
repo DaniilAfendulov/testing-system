@@ -13,7 +13,7 @@
 .title-bar {
   background: colors.$bar-background-color;
   span {
-    font-size: 22px;
+    font-size: 1.8em;
     font-style: italic;
     font-weight: bolder;
     @include fill-title(colors.$bar-text-color);

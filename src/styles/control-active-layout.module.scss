@@ -1,0 +1,6 @@
+.control-active-border-brush {
+  background: transparent;
+  &:hover{
+    background: linear-gradient(180deg, transparent 40%, rgba(29,131,190,0.4), rgba(30,205,167,0.6));
+  }
+}

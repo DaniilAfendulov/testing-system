@@ -1,0 +1,7 @@
+@use '../colors' as c;
+.horizontal-separator {
+  margin: .2em 0 .2em 0;
+  background-color: c.$separator-color;
+  height: 1px;
+  width: 100%;
+}

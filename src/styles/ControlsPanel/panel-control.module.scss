@@ -1,0 +1,33 @@
+.panel{
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    width: fit-content;
+    margin: .2em;
+    .container{
+        color: white;
+        max-width: 80px;
+        max-height: 80px;
+        margin-top: 10px;
+        
+    }
+    .control{
+        box-sizing: content-box;
+        &:hover{
+            background-size: auto;
+            /*background: #32EBFB;*/
+            /*background-image: url('./resources/leftStat_hover.png');*/
+        }
+        .img{
+            padding: .1em;
+            box-sizing: content-box;
+            img{
+                vertical-align: top;
+                height: 2.5em;
+                width: fit-content;
+                margin-left: 1em;
+                margin-right: 1em;
+            }
+        }
+    }
+}

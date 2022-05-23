@@ -1,11 +1,12 @@
-import {useState, useMemo, useCallback} from 'react'
-import HorizontalSeparator from './HorizontalSeparator'
+import {useState, useMemo, useCallback} from 'react';
+import {formStyles} from '../../utils/form-styles.js';
+import Styles from '../../styles/ControlsPanel/panel-control.module.scss';
 
 const PanelControl = (props) => {
   const [isMouseOver, setIsMouseOver] = useState(false);
   const isChecked = useMemo(() => props.isChecked(props.id), [props.isChecked, props.id]);
-  const classes = useMemo(() => ['panel-control', 'd-flex', 'flex-column', 'justify-content-center', 'align-items-center'].join(' '), []);
-
+  const classes = formStyles([Styles['panel'], Styles['control'], 'd-flex', 'flex-column', 'justify-content-center', 'align-items-center']);
+  const containerClasses = formStyles([Styles['panel'], Styles['container'], 'd-flex']);
   const img = useMemo(() => isChecked || isMouseOver ? props.altimg : props.img, [isChecked, isMouseOver]);
   const onClick = useCallback(
     (e) => {
@@ -24,15 +25,17 @@ const PanelControl = (props) => {
   };
   
   return (
-    <div className='d-flex panel-control-conteiner'>
+    <>
+    <div className={containerClasses}>
       <div className={classes} onClick={onClick} onMouseOver={onMouseOver} onMouseLeave={onMouseLeave}>
-        <div className='p-2'>
-          <img src={img} alt='img' className='img-fluid'></img>
+        <div className={Styles.img}>
+          <img src={img} alt='img' className=''></img>
         </div>
-        <div className=''>{props.label}</div>
-        {props.separator}
+        <div className={Styles.text}>{props.label}</div>
       </div>
     </div>
+    {props.separator}
+    </>
   )
 }
 
