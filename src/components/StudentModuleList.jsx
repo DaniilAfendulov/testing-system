@@ -10,7 +10,6 @@ import leftContent from '../resources/leftContent.png'
 import leftContentAlt from '../resources/leftContent_hover.png'
 import leftStat from '../resources/leftStat.png'
 import leftStatAlt from '../resources/leftStat_hover.png'
-import LoadingSpinner from './LoadingSpinner.jsx';
 const controls= [
   {
     id:1,

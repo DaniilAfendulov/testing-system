@@ -2,7 +2,7 @@ import {useState, useCallback} from 'react'
 import PanelControl from './PanelControl'
 
 function TopPanelControlList(props) {
-  const [id, setId] = useState(props.controls[0].id);
+  const [id, setId] = useState(null);
   const onClick = useCallback((key) => {
     setId(key);
   }, []);
