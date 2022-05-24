@@ -5,7 +5,7 @@ import Styles from '../../styles/ControlsPanel/left-panel.module.scss';
 
 const LeftControlsPanel = (props) => {
   return (
-    <div className='d-flex flex-row flex-grow-1'>
+    <div className='d-flex flex-row w-100 h-100'>
       <div className={formStyles(['d-flex', 'flex-column', Styles['left-panel']])}>
         <PanelControlList controls={props.controls} separator={<HorizontalSeparator/>}/>
       </div>

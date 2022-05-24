@@ -3,13 +3,17 @@
   height: fit-content;
   color: white;
   background-image: url('../../resources/Images/topPanelBack.jpg');
+  background-repeat: repeat;
+  background-size: contain;
   width: 100%;
   .title-bar{
-    background-image: inherit;
+    background: transparent;
     width: 100%;
     text-align: center;
+    margin: .5em;
     span{
       font-size: 2.8em;
     }
+
   }
 }

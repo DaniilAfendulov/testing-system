@@ -49,12 +49,12 @@ const controls= [
 
 const LeftPanelControlPage = () => {
   return (
-    <div className='d-flex flex-row min-vw-100 min-vh-100'>
+    <>
       <LeftControlsPanel controls={controls}>
         <TopControlsPanel controls={controls} title='Список модулей'>
         </TopControlsPanel>
       </LeftControlsPanel>
-    </div>
+    </>
   )
 }
 

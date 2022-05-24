@@ -1,3 +1,4 @@
+@import '../title-bar.module';
 .panel{
     justify-content: center;
     align-items: center;
@@ -5,13 +6,23 @@
     width: fit-content;
     margin: .2em;
     .container{
-        color: white;
         max-width: 80px;
         max-height: 80px;
-        margin-top: 10px;
-        
+        margin-top: 10px;       
     }
+    .title{
+        @extend .title-bar;
+        background: transparent;
+        width: 100%;
+        span{
+            text-align: center;
+            font-size: 1.1em;
+            font-style: normal;
+            font-weight: normal;
+        }
+    } 
     .control{
+        cursor: pointer;
         box-sizing: content-box;
         &:hover{
             background-size: auto;
@@ -29,5 +40,6 @@
                 margin-right: 1em;
             }
         }
+
     }
 }

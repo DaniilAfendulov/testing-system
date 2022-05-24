@@ -16,10 +16,19 @@ function TopControlsPanel(props) {
     }
     return(<div></div>)
   },[props.title])
+  const controls = useMemo(() =>{
+    if(props.controls){
+      return( 
+        <TopPanelControlList controls={props.controls} separator={<VerticalSeparator/>}/>
+      )
+    }
+    return(<div></div>)
+  },[props.title])
+
   return (
     <div className='d-flex flex-column flex-grow-1'>
       <div className={classes}>
-        <TopPanelControlList controls={props.controls} separator={<VerticalSeparator/>}/>
+        {controls}
         {title}
       </div>
       {props.children}

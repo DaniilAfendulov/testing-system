@@ -31,7 +31,7 @@ const PanelControl = (props) => {
         <div className={Styles.img}>
           <img src={img} alt='img' className=''></img>
         </div>
-        <div className={Styles.text}>{props.label}</div>
+        <div className={Styles.title}><span>{props.label}</span></div>
       </div>
     </div>
     {props.separator}

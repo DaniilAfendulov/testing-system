@@ -1,6 +1,9 @@
 .left-panel {
   min-width: fit-content;
   background-image: url('../../resources/Images/leftPanelBack.jpg');
+  background-repeat: repeat;
+  background-size: contain;
   /*color: linear-gradient(180deg,  white, #8FC797);*/
   color: white;
+  align-items: center;
 }
