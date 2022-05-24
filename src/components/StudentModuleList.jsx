@@ -1,4 +1,7 @@
-import React from 'react'
+import { getModules } from '../utils/api.js';
+import { useAsyncGet } from '../utils/useAsyncGet.js';
+import { useLoading } from "../utils/useLoading.js";
+
 import LeftControlsPanel from "../components/ControlsPanel/LeftControlsPanel"
 import TopControlsPanel from '../components/ControlsPanel/TopControlsPanel'
 import CardListWindow from './CardListWindow';
@@ -7,9 +10,7 @@ import leftContent from '../resources/leftContent.png'
 import leftContentAlt from '../resources/leftContent_hover.png'
 import leftStat from '../resources/leftStat.png'
 import leftStatAlt from '../resources/leftStat_hover.png'
-
-
-
+import LoadingSpinner from './LoadingSpinner.jsx';
 const controls= [
   {
     id:1,
@@ -24,30 +25,18 @@ const controls= [
     altimg: leftStatAlt
   }
 ];
-const modules = [
-    {
-      id: 1,
-      title: 'тестовый модуль 1',
-      description: 'описание тестовог модуля 1'
-    },
-    {
-      id: 2,
-      title: 'тестовый модуль 2',
-      description: 'описание тестовог модуля 2'
-    },
-    {
-      id: 3,
-      title: 'тестовый модуль 3',
-      description: 'описание тестовог модуля 3'
-    }
-];
 function StudentModuleList({chooseModule}) {
-  return (
+  const modules = useAsyncGet(getModules);
+  const loadedComponent = (
     <LeftControlsPanel controls={controls}>
-        <TopControlsPanel title='Список модулей'>
-          <CardListWindow cards={modules} onCardClick={chooseModule}></CardListWindow>
-        </TopControlsPanel>
+      <TopControlsPanel title='Список модулей'>
+        <CardListWindow cards={modules} onCardClick={chooseModule}></CardListWindow>
+      </TopControlsPanel>
     </LeftControlsPanel>
+  );
+  const component = useLoading(modules, loadedComponent);
+  return (
+    <>{component}</>
   )
 }
 
