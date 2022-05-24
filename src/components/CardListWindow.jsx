@@ -1,4 +1,3 @@
-import React from 'react'
 import Styles from '../../src/styles/card-list-window.module.scss'
 import Card from './Card'
 

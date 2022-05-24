@@ -1,5 +1,4 @@
 import React from 'react'
-import Styles from '../../src/styles/student-module-list.module.scss';
 import LeftControlsPanel from "../components/ControlsPanel/LeftControlsPanel"
 import TopControlsPanel from '../components/ControlsPanel/TopControlsPanel'
 import CardListWindow from './CardListWindow';
@@ -42,11 +41,11 @@ const modules = [
       description: 'описание тестовог модуля 3'
     }
 ];
-function StudentModuleList() {
+function StudentModuleList({chooseModule}) {
   return (
     <LeftControlsPanel controls={controls}>
         <TopControlsPanel title='Список модулей'>
-          <CardListWindow cards={modules}></CardListWindow>
+          <CardListWindow cards={modules} onCardClick={chooseModule}></CardListWindow>
         </TopControlsPanel>
     </LeftControlsPanel>
   )
