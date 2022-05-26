@@ -23,7 +23,7 @@ const onMouseOut = (e) => {
 
 function Card({id, title, description, onCardClick}) {
   const onClick = useCallback((e) =>{
-    onCardClick(id, title);
+    onCardClick(id);
   }, [onCardClick])
   return (
     <div className={Styles.container} onMouseOver={(e) => {if(description) onMouseOver(e)} } onMouseOut={(e) => {if(description) onMouseOut(e)} } onClick={onClick}>

@@ -1,6 +1,7 @@
 import { getModules } from '../utils/api.js';
 import { useAsyncGet } from '../utils/useAsyncGet.js';
 import { useLoading } from "../utils/useLoading.js";
+import { redirect } from '../utils/redirect.js';
 
 import LeftControlsPanel from "../components/ControlsPanel/LeftControlsPanel"
 import TopControlsPanel from '../components/ControlsPanel/TopControlsPanel'
@@ -24,16 +25,18 @@ const controls= [
     altimg: leftStatAlt
   }
 ];
-function StudentModuleList({chooseModule}) {
+const chooseModule = (id) => {
+  redirect('student/module?id='+id);
+}
+function StudentModuleList() {
   const modules = useAsyncGet(getModules);
-  const loadedComponent = (
+  const component = useLoading(modules, (modules) => 
     <LeftControlsPanel controls={controls}>
       <TopControlsPanel title='Список модулей'>
         <CardListWindow cards={modules} onCardClick={chooseModule}></CardListWindow>
       </TopControlsPanel>
-    </LeftControlsPanel>
+    </LeftControlsPanel>  
   );
-  const component = useLoading(modules, loadedComponent);
   return (
     <>{component}</>
   )

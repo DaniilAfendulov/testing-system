@@ -1,8 +1,9 @@
-import React from 'react'
+import { useParams } from 'react-router-dom';
 
 import { getModuleLesson } from '../utils/api.js';
 import { useAsyncGet } from '../utils/useAsyncGet.js';
 import { useLoading } from "../utils/useLoading.js";
+import { redirect } from '../utils/redirect.js';
 
 import LeftControlsPanel from './ControlsPanel/LeftControlsPanel.jsx';
 import TopControlsPanel from './ControlsPanel/TopControlsPanel.jsx';
@@ -15,6 +16,7 @@ import leftStatAlt from '../resources/leftStat_hover.png'
 
 import moduleImg from '../resources/content.png'; 
 import moduleImgAlt from '../resources/content_hover.png'; 
+
 
 const leftControls= [
     {
@@ -38,19 +40,21 @@ const topControls = [
         altimg: moduleImgAlt
     }
 ];
-function StudentModule({id, title, chooseLesson}) {
-    const lessons = useAsyncGet(() => getModuleLesson(id));
-    const loadedComponent = (
-      <LeftControlsPanel controls={leftControls}>
-        <TopControlsPanel title={title} controls={topControls}>
-          <CardListWindow cards={lessons}  onCardClick={chooseLesson}></CardListWindow>
-        </TopControlsPanel>
-      </LeftControlsPanel>
-    );
-    const component = useLoading(lessons, loadedComponent);
-    return (
-      <>{component}</>
-    )
+const chooseLesson = (id) => {
+  redirect('student/lesson?id='+id);
+}
+
+function StudentModule() {
+  const { id } = useParams();
+  const data = useAsyncGet(() => getModuleLesson(id));
+  const component = useLoading(data, ({title, lessons}) => 
+    <LeftControlsPanel controls={leftControls}>
+      <TopControlsPanel title={title} controls={topControls}>
+        <CardListWindow cards={lessons}  onCardClick={chooseLesson}/>
+      </TopControlsPanel>
+    </LeftControlsPanel>
+  );
+  return (<>{component}</>)
 }
 
 export default StudentModule

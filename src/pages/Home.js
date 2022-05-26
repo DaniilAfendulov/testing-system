@@ -4,10 +4,9 @@ import NavMenu from '../components/NavMenu';
 const Home = () => {
     const items = [
         {label:"Home", to:"/"},
-        {label:"StudentLoginPage", to:"/StudentLoginPage"},
-        {label:"LeftPanelControlPage", to:"/LeftPanelControlPage"},
+        {label:"StudentLoginPage", to:"/student/login"},
         {label:"MasterLoginPage", to:"/MasterLoginPage"},
-        {label:"StudentMainPage", to:"/StudentMainPage"}
+        {label:"StudentMainPage", to:"/student"}
     ];
     return (
         <NavMenu items={items}/>

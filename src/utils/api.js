@@ -19,11 +19,13 @@ export async function getModuleLesson(moduleId){
         description: 'описание тестового урока ' + index + ' модуля ' + moduleId
       })      
     }
-    return lessons;
+    return {lessons: lessons, id: moduleId, title: "Имя модуля"};
 }
 
 export async function getLesson(lessonId){
   const lesson = {
+    id: lessonId,
+    title: 'тестовый урок',
     video: false,
     practice: true,
     teory: true

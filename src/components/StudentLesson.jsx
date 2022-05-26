@@ -1,4 +1,5 @@
 import { useMemo } from 'react'
+import { useParams } from 'react-router-dom';
 
 import { getLesson } from '../utils/api.js';
 import { useAsyncGet } from '../utils/useAsyncGet.js';
@@ -18,6 +19,7 @@ import moduleImgAlt from '../resources/content_hover.png';
 
 import lessonImg from '../resources/module.png'; 
 import lessonImgAlt from '../resources/module_hover.png'; 
+
 
 const leftControls= [
     {
@@ -47,42 +49,36 @@ const topControls = [
         altimg: lessonImgAlt
     },
 ];
-function StudentLesson({id, title}) {
-    const lesson = useAsyncGet(() => getLesson(id));
-    console.log(lesson)
-    const cards = useMemo(() => {
-        if(!lesson) return [];
-        return [
-            {
-                id: 1,
-                title: 'видео',
-                description: lesson.video ? null : 'Видео недоступно'
-            },
-            {
-                id: 2,
-                title: 'Практический тест',
-                description: lesson.practice ? null : 'Практический тест недоступен'
-            },
-            {
-                id: 3,
-                title: 'Теоретический тест',
-                description: lesson.teory ? null : 'Теоретический тест недоступен'
-            }
-        ]
-    }, [lesson]);
-
-    console.log(cards)
-    const loadedComponent = (
+function StudentLesson() {
+  const { id } = useParams();
+  const data = useAsyncGet(() => getLesson(id));
+  const component = useLoading(data, ({title, video, practice, theory}) => {
+    const cards = [
+      {
+          id: 1,
+          title: 'видео',
+          description: video ? null : 'Видео недоступно'
+      },
+      {
+          id: 2,
+          title: 'Практический тест',
+          description: practice ? null : 'Практический тест недоступен'
+      },
+      {
+          id: 3,
+          title: 'Теоретический тест',
+          description: theory ? null : 'Теоретический тест недоступен'
+      }
+    ];
+    return(
       <LeftControlsPanel controls={leftControls}>
         <TopControlsPanel title={title} controls={topControls}>
           <CardListWindow cards={cards}></CardListWindow>
         </TopControlsPanel>
       </LeftControlsPanel>
     );
-    const component = useLoading(cards, loadedComponent);
-    return (
-      <>{component}</>
-    )
+  });
+  return (<>{component}</>)
 }
 
 export default StudentLesson
