@@ -18,7 +18,8 @@ function TopPanelControlList(props) {
           label={control.label} 
           img={control.img}  
           altimg={control.altimg}
-          onClick={onClick} 
+          to={control.path}
+          /*onClick={onClick}*/
           isChecked={isChecked}
           separator={props.separator}
         />)

@@ -19,30 +19,30 @@ import moduleImgAlt from '../resources/content_hover.png';
 
 
 const leftControls= [
-    {
-      id:1,
-      label:'Контент',
-      img: leftContent,
-      altimg: leftContentAlt
-    },
-    {
-      id:2,
-      label:'Статистика',
-      img: leftStat,
-      altimg: leftStatAlt
-    }
+  {
+    id:1,
+    label:'Контент',
+    img: leftContent,
+    altimg: leftContentAlt,
+    path:'/student/modules'
+  },
+  {
+    id:2,
+    label:'Статистика',
+    img: leftStat,
+    altimg: leftStatAlt,
+    path:'/student/statistics'
+  }
 ];
 const topControls = [
-    {
-        id:1,
-        label:'Модули',
-        img: moduleImg,
-        altimg: moduleImgAlt
-    }
+  {
+      id:1,
+      label:'Модули',
+      img: moduleImg,
+      altimg: moduleImgAlt,
+      path:'/student/modules'
+  }
 ];
-const chooseLesson = (id) => {
-  redirect('student/lesson?id='+id);
-}
 
 function StudentModule() {
   const { id } = useParams();
@@ -50,7 +50,7 @@ function StudentModule() {
   const component = useLoading(data, ({title, lessons}) => 
     <LeftControlsPanel controls={leftControls}>
       <TopControlsPanel title={title} controls={topControls}>
-        <CardListWindow cards={lessons}  onCardClick={chooseLesson}/>
+        <CardListWindow cards={lessons} path='/student/lesson?id='/>
       </TopControlsPanel>
     </LeftControlsPanel>
   );

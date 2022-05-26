@@ -11,18 +11,20 @@ import leftContent from '../resources/leftContent.png'
 import leftContentAlt from '../resources/leftContent_hover.png'
 import leftStat from '../resources/leftStat.png'
 import leftStatAlt from '../resources/leftStat_hover.png'
-const controls= [
+const leftControls= [
   {
     id:1,
     label:'Контент',
     img: leftContent,
-    altimg: leftContentAlt
+    altimg: leftContentAlt,
+    path:'/student/modules'
   },
   {
     id:2,
     label:'Статистика',
     img: leftStat,
-    altimg: leftStatAlt
+    altimg: leftStatAlt,
+    path:'/student/statistics'
   }
 ];
 const chooseModule = (id) => {
@@ -31,9 +33,9 @@ const chooseModule = (id) => {
 function StudentModuleList() {
   const modules = useAsyncGet(getModules);
   const component = useLoading(modules, (modules) => 
-    <LeftControlsPanel controls={controls}>
+    <LeftControlsPanel controls={leftControls}>
       <TopControlsPanel title='Список модулей'>
-        <CardListWindow cards={modules} onCardClick={chooseModule}></CardListWindow>
+        <CardListWindow cards={modules} path={'/student/module?id='} /*onCardClick={chooseModule}*//>
       </TopControlsPanel>
     </LeftControlsPanel>  
   );

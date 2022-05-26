@@ -5,13 +5,11 @@
   background-size: cover;
   height: 20em;
   width: 20em;
-  margin: 2em;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  cursor: pointer;
-
+  margin: 2em;
   .title{
     @extend .title-bar;
     background: transparent;

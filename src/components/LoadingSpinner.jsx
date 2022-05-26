@@ -1,9 +1,9 @@
-import React from 'react'
+import Styles from '../styles/loading.module.scss';
 
 function LoadingSpinner() {
   return (
-    <div className='d-flex justify-content-center align-items-center w-100 h-100'>
-        <div className='spinner-border' style={{height:'10em', width:'10em'}}></div>
+    <div className={Styles.container}>
+        <div className={['spinner-border', Styles.spinner].join(' ')}></div>
     </div>
   )
 }

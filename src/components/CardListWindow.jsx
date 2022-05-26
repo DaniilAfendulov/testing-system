@@ -1,11 +1,11 @@
-import Styles from '../../src/styles/card-list-window.module.scss'
-import Card from './Card'
+import CardContainer from './CardContainer'
+import LinkCard from './LinkCard'
 
-function CardListWindow({cards, onCardClick}) {
+function CardListWindow({cards, path}) {
   return (
-    <div className={Styles.container}>
-        {cards.map(c => <Card key={c.id} {...c} onCardClick={onCardClick}/>)}
-    </div>
+    <CardContainer>
+        {cards.map(c => <LinkCard key={c.id} cardProps={c} path={path+c.id}/>)}
+    </CardContainer>
   )
 }
 

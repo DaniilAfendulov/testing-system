@@ -18,7 +18,8 @@ function PanelControlList(props) {
           label={control.label} 
           img={control.img}  
           altimg={control.altimg}
-          onClick={onClick} 
+          /*onClick={onClick}*/
+          to={control.path}
           isChecked={isChecked}
           separator={props.separator}
         />)

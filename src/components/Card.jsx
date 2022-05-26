@@ -1,4 +1,3 @@
-import {useCallback} from 'react'
 import Styles from '../../src/styles/card.module.scss'
 
 const onMouseOver = (e) => {
@@ -21,18 +20,22 @@ const onMouseOut = (e) => {
     e.currentTarget.children[1].classList.remove(Styles.show);
 }
 
-function Card({id, title, description, onCardClick}) {
-  const onClick = useCallback((e) =>{
-    onCardClick(id);
-  }, [onCardClick])
-  return (
-    <div className={Styles.container} onMouseOver={(e) => {if(description) onMouseOver(e)} } onMouseOut={(e) => {if(description) onMouseOut(e)} } onClick={onClick}>
+function Card({title, description}) {
+  const component = description ? 
+    (
+      <div className={Styles.container} onMouseOver={ onMouseOver } onMouseOut={ onMouseOut } >
         <div className={Styles.title}><span>{title}</span></div>
         { description &&
           <div className={Styles.description}>{description}</div>
         }
-    </div>
-  )
+      </div>
+    ) :
+    (
+      <div className={Styles.container}>
+        <div className={Styles.title}><span>{title}</span></div>
+      </div>
+    );
+  return (<>{component}</>)
 }
 
 export default Card

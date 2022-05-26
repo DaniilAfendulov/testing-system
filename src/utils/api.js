@@ -25,10 +25,11 @@ export async function getModuleLesson(moduleId){
 export async function getLesson(lessonId){
   const lesson = {
     id: lessonId,
+    moduleId: 1,
     title: 'тестовый урок',
-    video: false,
-    practice: true,
-    teory: true
+    isVideoDisabled: true,
+    isPracticeDisabled: true,
+    isTheoryDisabled: false
   };
   return lesson;
 }
