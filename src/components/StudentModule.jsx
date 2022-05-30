@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 
 import { getModuleLesson } from '../utils/api.js';
 import { useAsyncGet } from '../utils/useAsyncGet.js';
@@ -16,6 +16,7 @@ import leftStatAlt from '../resources/leftStat_hover.png'
 
 import moduleImg from '../resources/content.png'; 
 import moduleImgAlt from '../resources/content_hover.png'; 
+import { useCallback } from 'react';
 
 
 const leftControls= [
@@ -45,15 +46,24 @@ const topControls = [
 ];
 
 function StudentModule() {
-  const { id } = useParams();
-  const data = useAsyncGet(() => getModuleLesson(id));
-  const component = useLoading(data, ({title, lessons}) => 
-    <LeftControlsPanel controls={leftControls}>
-      <TopControlsPanel title={title} controls={topControls}>
-        <CardListWindow cards={lessons} path='/student/lesson?id='/>
-      </TopControlsPanel>
-    </LeftControlsPanel>
-  );
+  const search = useLocation().search;
+  const moduleId = new URLSearchParams(search).get("id");
+  const getPath = useCallback(({id}) => 
+    '/student/lesson?' + new URLSearchParams({moduleId:moduleId, id:id}).toString(),
+  [moduleId]);
+  const getData = useCallback(() => getModuleLesson(moduleId), [moduleId]);
+  const data = useAsyncGet(getData);
+
+  const component = useLoading(data, ({title, cards}) => {
+    return(
+      <LeftControlsPanel controls={leftControls}>
+        <TopControlsPanel title={title} controls={topControls}>
+          <CardListWindow cards={cards} getPath={getPath}/>
+        </TopControlsPanel>
+      </LeftControlsPanel>
+    );
+  });
+    
   return (<>{component}</>)
 }
 

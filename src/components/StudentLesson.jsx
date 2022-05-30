@@ -1,5 +1,4 @@
-import { useMemo } from 'react'
-import { useParams } from 'react-router-dom';
+import { useCallback } from 'react'
 
 import { getLesson } from '../utils/api.js';
 import { useAsyncGet } from '../utils/useAsyncGet.js';
@@ -64,11 +63,13 @@ const cardBuilder = (isDisabled, title, disabledDescription, path) => {
 }
 
 function StudentLesson() {
-  const { id } = useParams();
-  const url = window.location.pathname;
   const search = window.location.search;
-  const data = useAsyncGet(() => getLesson(id));
-  const component = useLoading(data, ({id, moduleId, title, isVideoDisabled, isPracticeDisabled, isTheoryDisabled}) => {
+  const lessonId = new URLSearchParams(search).get("id");
+  const moduleId = new URLSearchParams(search).get("moduleId");
+  const url = window.location.pathname;
+  const getData = useCallback(() =>  getLesson(moduleId, lessonId), [moduleId, lessonId]);
+  const data = useAsyncGet(getData);
+  const component = useLoading(data, ({title, isVideoDisabled, isPracticeDisabled, isTheoryDisabled}) => {
     topControls[1].path = '/student/module?id='+moduleId;
     const VideoCard = cardBuilder(isVideoDisabled, 'видео', 'Видео недоступно', url+'/video'+search);
     const PracticeCard = cardBuilder(isPracticeDisabled, 'Практический тест', 'Практический тест недоступен', url+'/practice'+search);

@@ -20,7 +20,9 @@ const onMouseOut = (e) => {
     e.currentTarget.children[1].classList.remove(Styles.show);
 }
 
-function Card({title, description}) {
+function Card(props) {
+  const title = props.title;
+  const description = props.description;
   const component = description ? 
     (
       <div className={Styles.container} onMouseOver={ onMouseOver } onMouseOut={ onMouseOut } >

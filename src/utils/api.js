@@ -1,35 +1,82 @@
+const API_URL = "https://localhost:5001/api/";
+
+async function apiFetch(search, params, options){
+  const url = API_URL+search + (params?'?':'') + new URLSearchParams(params).toString();
+  const response = await fetch(url, {...options, mode: 'cors',credentials: 'include'})
+  .catch(err => failedRequestHandler(err));
+  if(response.status === 401){
+    unauthorizedResultHandler(response);
+    return;
+  }
+  if(response.status === 404 || response.status === 204){
+    notFoundResultHandler(response);
+    return;
+  }
+  return response;
+}
+
+async function apiPost(search, params){
+  return apiFetch(search, params, {method: 'POST'});
+}
+
+async function apiGet(search, params){
+  return apiFetch(search, params, {method: 'GET'});
+}
+
+async function failedRequestHandler(response){
+  alert(response);
+  window.location.href = "/error";  
+}
+
+async function unauthorizedResultHandler(response){
+  alert('unauthorized');
+  window.location.href = "/MasterLoginPage";  
+}
+
+async function notFoundResultHandler(response){
+  alert('notFound');
+  window.location.href = "/error";  
+}
+
 export async function getModules(){
-    const modules = [];
-    for (let index = 1; index < 4; index++) {
-      modules.push({
-        id: index,
-        title: 'тестовый модуль ' + index,
-        description: 'описание тестового модуля ' + index
-      })      
-    }
+  const response = await apiGet("modules");
+  if(response.ok){
+    const jsres = await response.json();
+    const modules = jsres.map(m => {
+      const {name, ...other} = m;
+      return {...other, title: name}
+    });
     return modules;
+  }
 }
 
 export async function getModuleLesson(moduleId){
-    const lessons = [];
-    for (let index = 0; index < 4; index++) {
-      lessons.push({
-        id: index,
-        title: 'тестовый урок ' + index + ' модуля ' + moduleId,
-        description: 'описание тестового урока ' + index + ' модуля ' + moduleId
-      })      
-    }
-    return {lessons: lessons, id: moduleId, title: "Имя модуля"};
+  const response = await apiGet("module/get", {id:moduleId});
+  if(response.status === 200){
+    const {lessons, module} = await response.json();
+    const cards = lessons.map(l => ({id: l.id, title: l.name, description:l.description}));
+    return {title: module.name, cards: cards}
+  };
+  return null;
 }
 
-export async function getLesson(lessonId){
-  const lesson = {
-    id: lessonId,
-    moduleId: 1,
-    title: 'тестовый урок',
-    isVideoDisabled: true,
-    isPracticeDisabled: true,
-    isTheoryDisabled: false
-  };
-  return lesson;
+export async function getLesson(moduleId, lessonId){
+  const response = await apiGet("module/getlessoninfo", {moduleId:moduleId, id:lessonId});
+  if(response.status === 200){
+    const lessonInfo = await response.json();
+    return lessonInfo;
+  };  
+  return null;
+}
+
+export async function auth(login, password){
+   const response = await apiPost("auth", {login:login, password:password});
+   console.log(response)
+  if(response.status === 400){
+    alert(response);
+    return;
+  }
+  if(response.ok){
+    window.location.href = '/';
+  }
 }

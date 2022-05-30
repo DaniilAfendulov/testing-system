@@ -7,6 +7,7 @@ import StudentModuleList from './components/StudentModuleList';
 import StudentModule from './components/StudentModule';
 import Home from './pages/Home';
 import StudentLesson from './components/StudentLesson';
+import ErrorPage from './pages/ErrorPage';
 
 export default class App extends Component {
   static displayName = App.name;
@@ -23,6 +24,7 @@ export default class App extends Component {
           <Route exact path='lesson' element={<StudentLesson/>} />
           <Route path="*" element={<Navigate to="modules"/>} />
         </Route>
+        <Route exact path='/error' element={<ErrorPage/>} />
         <Route path="*" element={<Navigate to="/"/>} />
       </Routes>
     );

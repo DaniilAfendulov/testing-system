@@ -30,12 +30,16 @@ const leftControls= [
 const chooseModule = (id) => {
   redirect('student/module?id='+id);
 }
+const getPath = ({id}) => {
+  return '/student/module?id='+id;
+}
+
 function StudentModuleList() {
   const modules = useAsyncGet(getModules);
   const component = useLoading(modules, (modules) => 
     <LeftControlsPanel controls={leftControls}>
       <TopControlsPanel title='Список модулей'>
-        <CardListWindow cards={modules} path={'/student/module?id='} /*onCardClick={chooseModule}*//>
+        <CardListWindow cards={modules} getPath={getPath}/>
       </TopControlsPanel>
     </LeftControlsPanel>  
   );
