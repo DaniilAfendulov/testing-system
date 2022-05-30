@@ -69,6 +69,10 @@ export async function getLesson(moduleId, lessonId){
   return null;
 }
 
+export async function getTheoryTest(moduleId, lessonId){
+  //TODO
+}
+
 export async function auth(login, password){
    const response = await apiPost("auth", {login:login, password:password});
    console.log(response)

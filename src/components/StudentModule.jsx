@@ -1,9 +1,6 @@
-import { useLocation } from 'react-router-dom';
-
 import { getModuleLesson } from '../utils/api.js';
 import { useAsyncGet } from '../utils/useAsyncGet.js';
 import { useLoading } from "../utils/useLoading.js";
-import { redirect } from '../utils/redirect.js';
 
 import LeftControlsPanel from './ControlsPanel/LeftControlsPanel.jsx';
 import TopControlsPanel from './ControlsPanel/TopControlsPanel.jsx';
@@ -46,7 +43,7 @@ const topControls = [
 ];
 
 function StudentModule() {
-  const search = useLocation().search;
+  const search = window.location.search;
   const moduleId = new URLSearchParams(search).get("id");
   const getPath = useCallback(({id}) => 
     '/student/lesson?' + new URLSearchParams({moduleId:moduleId, id:id}).toString(),

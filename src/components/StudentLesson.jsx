@@ -64,8 +64,9 @@ const cardBuilder = (isDisabled, title, disabledDescription, path) => {
 
 function StudentLesson() {
   const search = window.location.search;
-  const lessonId = new URLSearchParams(search).get("id");
-  const moduleId = new URLSearchParams(search).get("moduleId");
+  const searchParams = new URLSearchParams(search);
+  const lessonId = searchParams.get("id");
+  const moduleId = searchParams.get("moduleId");
   const url = window.location.pathname;
   const getData = useCallback(() =>  getLesson(moduleId, lessonId), [moduleId, lessonId]);
   const data = useAsyncGet(getData);
