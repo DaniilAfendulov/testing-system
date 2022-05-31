@@ -70,7 +70,21 @@ export async function getLesson(moduleId, lessonId){
 }
 
 export async function getTheoryTest(moduleId, lessonId){
-  //TODO
+  const response = await apiGet("module/gettests", {moduleId:moduleId, id:lessonId});
+  if(response.status === 200){
+    const tests = await response.json();
+    return tests.map(test => parseTest(test));
+  };  
+  return null;
+}
+
+function parseTest(test){
+  // InputTest
+  if (test.type === 0) {
+    const {testBase, answers} = test;
+    return testBase;
+  }
+  return test;
 }
 
 export async function auth(login, password){

@@ -17,7 +17,7 @@ function CheckBoxTest({question, answers, setResult}) {
     setAnswer([...answerList, val]);
   }, [answerList, setAnswer, isChecked]);
   return (
-    <TestContainer question={question} onClick={onClick}>
+    <TestContainer question={question} onSubmit={onClick}>
       <table className={Styles.table}>
         <tbody>
           <tr>

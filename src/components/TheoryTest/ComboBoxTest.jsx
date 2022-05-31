@@ -8,7 +8,7 @@ function ComboBoxTest({question, setResult, answers}) {
       setResult(answer);
     }, [answer, setResult]);
     return (
-      <TestContainer question={question} onClick={onClick}>
+      <TestContainer question={question} onSubmit={onClick}>
         <ComboBox chooseValue={setAnswer} options={answers}/>
       </TestContainer>
     )

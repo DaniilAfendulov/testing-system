@@ -12,7 +12,7 @@ function RadioTest({question, answers, setResult}) {
   }, [answer, setResult]);
   const isChecked = useCallback((val) => val===answer, [answer]);
   return (
-    <TestContainer question={question} onClick={onClick}>
+    <TestContainer question={question} onSubmit={onClick}>
       <table className={Styles.table}>
         <tbody>
           <tr>

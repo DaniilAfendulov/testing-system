@@ -1,7 +1,8 @@
 @use 'title-bar.module';
 @use 'colors';
 .button {
-  width: 20%;
+  width: fit-content;
+  padding: 0 1em 0 1em;
   height: auto;
   background: colors.$bar-background-color;
   &:hover {
