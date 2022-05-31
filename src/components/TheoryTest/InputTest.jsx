@@ -7,10 +7,10 @@ function InputTest({question, setResult}) {
   const [answer, setAnswer] = useState('');
   const onClick = useCallback((e) => {
     setResult(answer);
-  }, [answer]);
+  }, [answer, setResult]);
   return (
     <TestContainer question={question} onClick={onClick}>
-        <TextInput setValue={setAnswer} classes={[Styles.input]} containerClasses={[Styles['input-container']]}/>
+        <TextInput setValue={setAnswer}/>
     </TestContainer>
   )
 }
