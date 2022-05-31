@@ -1,0 +1,7 @@
+@use './input-test.module.scss';
+.container{
+    option{
+        @extend .login-text-input;
+        background-color: #878585;
+    }
+}
