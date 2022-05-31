@@ -81,8 +81,8 @@ export async function getTheoryTest(moduleId, lessonId){
 function parseTest(test){
   // InputTest
   if (test.type === 0) {
-    const {testBase, answers} = test;
-    return testBase;
+    const {answers, ...rest} = test;
+    return rest;
   }
   return test;
 }

@@ -3,7 +3,7 @@ import CheckBox from "./CheckBox";
 import TestContainer from "./TestContainer";
 import Styles from '../../styles/TheoryTests/table-test.module.scss';
 
-function CheckBoxTest({question, answers, setResult}) {
+function CheckBoxTest({test, setResult}) {
   const [answerList, setAnswer] = useState([]);
   const onClick = useCallback((e) => {
     setResult(answerList);
@@ -17,16 +17,16 @@ function CheckBoxTest({question, answers, setResult}) {
     setAnswer([...answerList, val]);
   }, [answerList, setAnswer, isChecked]);
   return (
-    <TestContainer question={question} onSubmit={onClick}>
+    <TestContainer question={test.question} onSubmit={onClick}>
       <table className={Styles.table}>
         <tbody>
           <tr>
-            <td><CheckBox label={answers[0]} value={0} chooseValue={chooseValue} isChecked={isChecked}/></td>
-            <td><CheckBox label={answers[1]} value={1} chooseValue={chooseValue} isChecked={isChecked}/></td>
+            <td><CheckBox label={test.answers[0]} value={test.answers[0]} chooseValue={chooseValue} isChecked={isChecked}/></td>
+            <td><CheckBox label={test.answers[1]} value={test.answers[1]} chooseValue={chooseValue} isChecked={isChecked}/></td>
           </tr>
           <tr>
-            <td><CheckBox label={answers[2]} value={2} chooseValue={chooseValue} isChecked={isChecked}/></td>
-            <td><CheckBox label={answers[3]} value={3} chooseValue={chooseValue} isChecked={isChecked}/></td>
+            <td><CheckBox label={test.answers[2]} value={test.answers[2]} chooseValue={chooseValue} isChecked={isChecked}/></td>
+            <td><CheckBox label={test.answers[3]} value={test.answers[3]} chooseValue={chooseValue} isChecked={isChecked}/></td>
           </tr>
         </tbody>
       </table>
