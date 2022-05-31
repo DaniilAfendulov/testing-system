@@ -1,13 +1,14 @@
-import {} from 'react'
+import {useCallback} from 'react'
 
-import { getTheoryTest } from '../utils/api.js';
-import { useAsyncGet } from '../utils/useAsyncGet.js';
-import { useLoading } from "../utils/useLoading.js";
+import { getTheoryTest } from '../../utils/api.js';
+import { useAsyncGet } from '../../utils/useAsyncGet.js';
+import { useLoading } from "../../utils/useLoading.js";
 
-import LeftControlsPanel from './ControlsPanel/LeftControlsPanel.jsx';
-import TopControlsPanel from './ControlsPanel/TopControlsPanel.jsx';
+import LeftControlsPanel from '../ControlsPanel/LeftControlsPanel.jsx';
+import TopControlsPanel from '../ControlsPanel/TopControlsPanel.jsx';
 
 import { leftControls, topControls} from '../ControlsPanel/controls.js';
+import StartTheoryTest from './StartTheoryTest.jsx';
 
 function TheoryTest() {
     const search = window.location.search;
@@ -17,13 +18,13 @@ function TheoryTest() {
     const getData = useCallback(() =>  getTheoryTest(moduleId, lessonId), [moduleId, lessonId]);
     const data = useAsyncGet(getData);
 
-    const component = useLoading(data, ({title}) => {
+    const component = useLoading(data, (tests) => {
         topControls[1].path = '/student/module?id='+moduleId;
         topControls[2].path = '/student/lesson?id='+lessonId;
         return(
           <LeftControlsPanel controls={leftControls}>
             <TopControlsPanel title="Теоретический тест" controls={topControls.slice(0,3)}>
-                <StartTheoryTest/>
+              <StartTheoryTest/>
             </TopControlsPanel>
           </LeftControlsPanel>
         );
