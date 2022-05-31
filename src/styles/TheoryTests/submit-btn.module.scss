@@ -1,0 +1,23 @@
+.container{
+    display: flex;
+    width: 8em;
+    height: 8em;
+    flex-direction: column;
+    align-items: center;
+    margin: 2em;
+    background: transparent;
+    cursor: pointer;
+    .img{
+        height: 100%;
+        width: 100%;
+        background-image: url(../../resources/testConfirm.png);
+        background-repeat: no-repeat;
+        background-position:center;
+        background-size: contain;
+    }
+    &:hover{
+        .img{
+            background-image: url(../../resources/testConfirm_hover.png);
+        }
+    }
+}

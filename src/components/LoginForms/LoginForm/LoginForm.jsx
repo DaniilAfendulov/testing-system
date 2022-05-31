@@ -1,9 +1,14 @@
 import Button from '../Button/Button';
 import Styles from "../../../styles/login-form.module.scss";
+import { useCallback } from 'react';
 
 export const LoginForm = (props) => {
+  const onClick = useCallback((e) => {
+    e.preventDefault();
+    props.onClick(e);
+  }, [props.onClick]);
   return (
-    <div className='d-flex justify-content-center m-3'>
+    <form className='d-flex justify-content-center m-3'>
       <div className={[Styles.form, 'd-block justify-content-center border border-2 border-dark'].join(' ')}  >
         <div className={[Styles['title-bar'], 'row m-0'].join(' ')} >
           <div className='col-4'>
@@ -18,10 +23,10 @@ export const LoginForm = (props) => {
           {props.children}
         </div>
         <div className='d-flex justify-content-end m-2'>
-          <Button onClick={props.onClick} text='ОК'/>
+          <Button onClick={onClick} text='ОК'/>
         </div>
       </div>
-    </div>
+    </form>
 
   )
 }

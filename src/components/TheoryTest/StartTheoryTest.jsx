@@ -1,8 +1,9 @@
-import React from 'react'
-
+import TestContainer from "./TestContainer"
 function StartTheoryTest() {
   return (
-    <div>StartTheoryTest</div>
+    <TestContainer >
+
+    </TestContainer>
   )
 }
 

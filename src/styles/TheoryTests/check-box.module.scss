@@ -1,0 +1,21 @@
+@use '../colors';
+.container{
+    font-size: 2em;
+    display: flex;
+    align-items: center;
+    .check-box {
+        width: 1em;
+        height: 1em;
+        background-image: colors.$radio-color;
+    }
+    .checked{
+        background-image: radial-gradient(colors.$blue-color, transparent);
+        border: 0.1em solid rgb(43,43,43);
+    }
+    span {
+        width: 100%;
+        height: 100%;
+        margin-left: 1em;
+        text-align: left;
+    }
+}
