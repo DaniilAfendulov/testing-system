@@ -1,4 +1,4 @@
-import {useCallback, useMemo, useState} from 'react'
+import { useCallback, useMemo, useState } from 'react'
 
 import { getTheoryTest } from '../../utils/api.js';
 import { useAsyncGet } from '../../utils/useAsyncGet.js';
@@ -38,43 +38,51 @@ function TheoryTest() {
   const searchParams = new URLSearchParams(search);
   const lessonId = searchParams.get("id");
   const moduleId = searchParams.get("moduleId");
+
+  topControls[1].path = useMemo(() => '/student/module?id='+moduleId, [moduleId]);
+  topControls[2].path = useMemo(() => '/student/lesson'+search, [search]);
+
   const getData = useCallback(() =>  getTheoryTest(moduleId, lessonId), [moduleId, lessonId]);
   const data = useAsyncGet(getData);
 
-  const [time, setTime] = useState({t:0});
-  const addSecond = useCallback(() => {
-    time.t = time.t+1;
-    setTime(time);
-    console.log(time)
-  }, [time, setTime]);
-  const start = useCallback((e) => {
-    let timer = setInterval(addSecond, 1000);
-    chooseTest(0);
-  }, []);
-  const [currentTest, setCurrentTest] = useState(<StartTheoryTest onClick={start}/>);
-  const [tests, setTests] = useState(null);
   const [answers, setAnswers] = useState();
-  const addAnswer = useCallback((index, answer) => setAnswers(answer.map((el, i) => i === index ? answer : el)), [answers]);
-  const testsComponents = useMemo(() => tests ? testBuild(tests, addAnswer) : null, [tests]);
+  const addAnswer = useCallback((index, answer) => setAnswers(answer.map((el, i) => i === index ? answer : el)), [answers, setAnswers]);
 
-  const chooseTest = useCallback((index) => setCurrentTest(testsComponents[index]), [setCurrentTest, testsComponents]);
-  
-  const component = useLoading(data, (tests) => {
-    topControls[1].path = '/student/module?id='+moduleId;
-    topControls[2].path = '/student/lesson'+search;
-    setTests(tests);
-    setAnswers(new Array(tests.length));
-    const buttonsCallbacks = tests.map((_, i) => (e)=>chooseTest(i));
-    return(
-      <LeftControlsPanel controls={leftControls}>
-        <TopControlsPanel title="Теоретический тест" controls={topControls.slice(0,3)}>
-          <>{currentTest}</>
-          <BottomPanel buttonsCallbacks={buttonsCallbacks} time={time.t}/>
-        </TopControlsPanel>
-      </LeftControlsPanel>
-    );
-  });
-  return (<>{component}</>)
+  const testsComponents = useMemo(() => data ? testBuild(data, addAnswer) : null, [data]);
+  const [currentTest, setCurrentTest] = useState(null);
+  const chooseTest = useCallback((index) => testsComponents ? setCurrentTest(testsComponents[index]) : null, [setCurrentTest, testsComponents]);
+  const buttonsCallbacks = useMemo(() => data ? data.map((_, i) => (e)=>chooseTest(i)) : null, [data, chooseTest]);
+
+  const [timer, setTimer] = useState({timer:null, time:0});
+  const addSecond = useCallback(() => {
+    setTimer({...timer, time: timer.time+1});
+    console.log(timer)
+  }, [timer, setTimer]);
+
+  const start = useCallback((e) => {
+    setTimer({timer:setInterval(addSecond, 1000), time:0});
+    chooseTest(0);
+  }, [setTimer, addSecond, chooseTest]);
+
+
+  if(!currentTest){
+    setCurrentTest(<StartTheoryTest onClick={start}/>);
+  }
+
+  const [isLoading, LoadComponent] = useLoading(data);
+  return (
+    <>
+      { isLoading 
+      ? <>{LoadComponent}</>
+      : <LeftControlsPanel controls={leftControls}>
+          <TopControlsPanel title="Теоретический тест" controls={topControls.slice(0,3)}>
+            <>{currentTest}</>
+            <BottomPanel buttonsCallbacks={buttonsCallbacks} time={timer.time}/>
+          </TopControlsPanel>
+        </LeftControlsPanel>
+      }
+    </>
+  )
 }
 
 export default TheoryTest

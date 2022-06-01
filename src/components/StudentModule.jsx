@@ -19,17 +19,19 @@ function StudentModule() {
   const getData = useCallback(() => getModuleLesson(moduleId), [moduleId]);
   const data = useAsyncGet(getData);
 
-  const component = useLoading(data, ({title, cards}) => {
-    return(
-      <LeftControlsPanel controls={leftControls}>
-        <TopControlsPanel title={title} controls={topControls.slice(0,1)}>
-          <CardListWindow cards={cards} getPath={getPath}/>
-        </TopControlsPanel>
-      </LeftControlsPanel>
-    );
-  });
-    
-  return (<>{component}</>)
+  const [isLoading, LoadComponent] = useLoading(data);  
+  return (
+    <>
+      { isLoading 
+      ? <>{LoadComponent}</>
+      : <LeftControlsPanel controls={leftControls}>
+          <TopControlsPanel title={data.title} controls={topControls.slice(0,1)}>
+            <CardListWindow cards={data.cards} getPath={getPath}/>
+          </TopControlsPanel>
+        </LeftControlsPanel>
+      }
+    </>
+  )
 }
 
 export default StudentModule

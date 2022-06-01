@@ -15,15 +15,19 @@ const getPath = ({id}) => {
 
 function StudentModuleList() {
   const modules = useAsyncGet(getModules);
-  const component = useLoading(modules, (modules) => 
-    <LeftControlsPanel controls={leftControls}>
-      <TopControlsPanel title='Список модулей'>
-        <CardListWindow cards={modules} getPath={getPath}/>
-      </TopControlsPanel>
-    </LeftControlsPanel>  
-  );
+
+  const [isLoading, LoadComponent] = useLoading(modules);  
   return (
-    <>{component}</>
+    <>
+      { isLoading 
+      ? <>{LoadComponent}</>
+      : <LeftControlsPanel controls={leftControls}>
+          <TopControlsPanel title='Список модулей'>
+            <CardListWindow cards={modules} getPath={getPath}/>
+          </TopControlsPanel>
+        </LeftControlsPanel>  
+      }
+    </>
   )
 }
 
