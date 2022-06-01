@@ -1,0 +1,14 @@
+@use '../colors';
+.container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 1em 0 1em;
+    font-size: 2em;
+    span{
+        color: transparent;
+        -webkit-text-fill-color: transparent;
+        -webkit-background-clip: text;            
+        background-image: colors.$text-foreground;
+    }
+}

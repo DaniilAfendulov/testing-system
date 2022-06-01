@@ -1,0 +1,11 @@
+.container{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-image: url('../../resources/Images/topPanelBack.jpg');
+    background-repeat: repeat;
+    background-size: contain;
+    div{
+        display: flex;
+    }
+}

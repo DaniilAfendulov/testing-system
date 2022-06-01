@@ -1,9 +1,11 @@
-import React from 'react'
+import Styles from '../../styles/TheoryTests/numeric-button.module.scss'; 
 
 function NumericButton({onClick, text}) {
   return (
-    <div onClick={onClick}>
+    <div onClick={onClick} className={Styles.container}>
+      <div>
         <span>{text}</span>
+      </div>
     </div>
   )
 }

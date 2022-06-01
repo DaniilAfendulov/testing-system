@@ -1,0 +1,25 @@
+$size:3rem;
+.container{
+    background-image: linear-gradient(to right, black, rgb(157,153,153));
+    border-radius: 50%;
+    width: $size;
+    height: $size;
+    margin: 0.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    div{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: rgb(41, 190, 41);
+        border-radius: 50%;
+        width: $size*4/5;
+        height: $size*4/5;
+        padding: $size/10;      
+        span{
+            font-size: $size/3*2;
+            color: black;
+        }
+    }
+}
