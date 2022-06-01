@@ -46,16 +46,18 @@ function TheoryTest() {
   const data = useAsyncGet(getData);
 
   const [answers, setAnswers] = useState();
-  const addAnswer = useCallback((index, answer) => setAnswers(answer.map((el, i) => i === index ? answer : el)), [answers, setAnswers]);
+  const addAnswer = useCallback((index, answer) => setAnswers(answer.map((el, i) => i === index ? answer : el)), [setAnswers]);
 
-  const testsComponents = useMemo(() => data ? testBuild(data, addAnswer) : null, [data]);
+  const testsComponents = useMemo(() => data ? testBuild(data, addAnswer) : null, [data, addAnswer]);
   const [currentTest, setCurrentTest] = useState(null);
-  const chooseTest = useCallback((index) => testsComponents ? setCurrentTest(testsComponents[index]) : null, [setCurrentTest, testsComponents]);
+  const chooseTest = useCallback((index) => {
+    if(testsComponents) setCurrentTest(testsComponents[index]);
+  }, [setCurrentTest, testsComponents]);
   const buttonsCallbacks = useMemo(() => data ? data.map((_, i) => (e)=>chooseTest(i)) : null, [data, chooseTest]);
 
   const [timer, setTimer] = useState({timer:null, time:0});
   const addSecond = useCallback(() => {
-    setTimer({...timer, time: timer.time+1});
+    setTimer({timer: timer.timer, time: timer.time+1});
     console.log(timer)
   }, [timer, setTimer]);
 
