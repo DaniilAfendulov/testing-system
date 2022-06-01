@@ -24,6 +24,9 @@ const videoCardFactory = (isDisabled, url, search) => cardBuilder(isDisabled, '�
 const practiceCardFactory = (isDisabled, url, search) => cardBuilder(isDisabled, 'Практический тест', 'Практический тест недоступен', url+'/practice'+search);
 const theoryCardFactory = (isDisabled, url, search) => cardBuilder(isDisabled, 'Теоретический тест', 'Теоретический тест недоступен', url+'/theory'+search);
 
+const videoCardBlock = (_, url, search) => cardBuilder(true, 'видео', 'Видео недоступно', url+'/video'+search);
+const practiceCardBlock = (_, url, search) => cardBuilder(true, 'Теоретический тест', 'Теоретический тест недоступен', url+'/theory'+search);
+
 function StudentLesson() {
   const url = window.location.pathname;
   const search = window.location.search;
@@ -44,8 +47,8 @@ function StudentLesson() {
       : <LeftControlsPanel controls={leftControls}>
           <TopControlsPanel title={data.title} controls={topControls.slice(0,2)}>        
             <CardContainer>
-              <>{videoCardFactory(data.isVideoDisabled, url, search)}</>
-              <>{practiceCardFactory(data.isPracticeDisabled, url, search)}</>
+              <>{videoCardBlock(data.isVideoDisabled, url, search)}</>
+              <>{practiceCardBlock(data.isPracticeDisabled, url, search)}</>
               <>{theoryCardFactory(data.isTheoryDisabled, url, search)}</>
             </CardContainer>
           </TopControlsPanel>
