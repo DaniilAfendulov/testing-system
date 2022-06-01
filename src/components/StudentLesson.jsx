@@ -25,15 +25,16 @@ const practiceCardFactory = (isDisabled, url, search) => cardBuilder(isDisabled,
 const theoryCardFactory = (isDisabled, url, search) => cardBuilder(isDisabled, 'Теоретический тест', 'Теоретический тест недоступен', url+'/theory'+search);
 
 function StudentLesson() {
+  const url = window.location.pathname;
   const search = window.location.search;
   const searchParams = new URLSearchParams(search);
   const lessonId = searchParams.get("id");
   const moduleId = searchParams.get("moduleId");
-  const url = window.location.pathname;
+
   const getData = useCallback(() =>  getLesson(moduleId, lessonId), [moduleId, lessonId]);
   const data = useAsyncGet(getData);
 
-  topControls[1].path = '/student/module?id='+moduleId;
+  topControls[1].path = useMemo(() => '/student/module?id='+moduleId, [moduleId]);
 
   const [isLoading, LoadComponent] = useLoading(data);
   return (
