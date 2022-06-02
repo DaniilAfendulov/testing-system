@@ -2,6 +2,8 @@ import leftContent from '../../resources/leftContent.png'
 import leftContentAlt from '../../resources/leftContent_hover.png'
 import leftStat from '../../resources/leftStat.png'
 import leftStatAlt from '../../resources/leftStat_hover.png'
+import logout from '../../resources/door-open.svg';
+import logoutHover from '../../resources/door-open_hover.svg';
 
 import moduleImg from '../../resources/content.png'; 
 import moduleImgAlt from '../../resources/content_hover.png'; 
@@ -26,6 +28,13 @@ export const leftControls = [
       img: leftStat,
       altimg: leftStatAlt,
       path:'/student/statistics'
+    },
+    {
+      id:3,
+      label:'Выйти',
+      img: logout,
+      altimg: logoutHover,
+      path:'/student/logout'
     }
 ];
 

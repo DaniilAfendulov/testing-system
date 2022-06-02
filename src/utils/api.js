@@ -98,3 +98,7 @@ export async function auth(login, password){
     window.location.href = '/';
   }
 }
+
+export async function logout(){
+  const response = await apiPost("logout", {});
+}
