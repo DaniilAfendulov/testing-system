@@ -8,7 +8,7 @@ function ComboBox({options, chooseValue}) {
   return (
       <div className={Styles.container}>
         <select className={Styles.input} onChange={onChange}>
-            <option disabled></option>
+            <option disabled selected></option>
             {options.map(option => <option value={option}>{option}</option>)}
         </select>
       </div>
