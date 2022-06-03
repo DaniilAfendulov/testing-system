@@ -1,12 +1,5 @@
 import { useCallback, useMemo, useState, useRef } from 'react'
 
-import { getTheoryTest } from '../../utils/api.js';
-import { useAsyncGet } from '../../utils/useAsyncGet.js';
-
-import LeftControlsPanel from '../ControlsPanel/LeftControlsPanel.jsx';
-import TopControlsPanel from '../ControlsPanel/TopControlsPanel.jsx';
-
-import { leftControls, topControls} from '../ControlsPanel/controls.js';
 import StartTheoryTest from './StartTheoryTest.jsx';
 import InputTest from './InputTest.jsx';
 import RadioTest from './RadioTest.jsx';
@@ -14,7 +7,6 @@ import CheckBoxTest from './CheckBoxTest.jsx';
 import ComboBoxTest from './ComboBoxTest.jsx';
 import BottomPanel from './BottomPanel.jsx';
 import FinishTheoryTest from './FinishTheoryTest.jsx';
-import LoadingBlock from '../DataBlock.jsx';
 
 const testFactory = (tests, onSubmitTestHandler, lastTestHandler) => {  
     return tests.map((test, i) => 
@@ -41,20 +33,20 @@ const testFactory = (tests, onSubmitTestHandler, lastTestHandler) => {
 
 
 function TestBlock({data}) {
-  const testsComponents = useRef();
-  
-  const [answers, setAnswers] = useState();
+  const answersRef = useRef(Array(data.length).fill(null));
+  const setAnswers = useCallback((val) => answersRef.current = val, [answersRef]);
 
   const addAnswer = useCallback((index, answer) => {
-    console.log({ answers,  index, answer});
-    let t = answers.map((el, i) => i === index ? answer : el);
-    console.log(t);
-    setAnswers(t);
-    console.log({ answers,  index, answer})
-  }, [setAnswers, answers]);
+    setAnswers(answersRef.current.map((el, i) => i === index ? answer : el));
+  }, [setAnswers, answersRef.current]);
 
+  const timer = useRef();
+  const setTimer = useCallback((val) => timer.current = val, [timer]);
+  const time = useRef(0);
+  const setTime = useCallback((val) => time.current = val, [time]);
+
+  const testsComponents = useRef();
   const [currentTest, setCurrentTest] = useState(null);
-
 
   const chooseTest = useCallback((index) => {
     if(testsComponents.current) setCurrentTest(testsComponents.current[index]);
@@ -78,15 +70,13 @@ function TestBlock({data}) {
     data ? data.map((_, i) => (e)=>chooseTest(i)) : null
   , [data, chooseTest]);
 
-  const [timer, setTimer] = useState({timer:null, time:0});
-
   const addSecond = useCallback(() => {
-    setTimer({timer: timer.timer, time: timer.time+1});
-    console.log(timer)
+    setTime(time.current+1);
+    console.log(time.current)
   }, [timer, setTimer]);
 
   const start = useCallback((e) => {
-    //setTimer({timer:setInterval(addSecond, 1000), time:0});
+    setTimer(setInterval(addSecond, 1000));
     chooseTest(0);
   }, [setTimer, addSecond, chooseTest]);
 
@@ -94,14 +84,11 @@ function TestBlock({data}) {
   if(!currentTest){
     setCurrentTest(<StartTheoryTest onClick={start}/>);
   }
-  if(!answers && data){
-    console.log(answers)
-    setAnswers(Array(data.length).fill(null))
-  }
+
   return (
     <>    
       <>{currentTest}</>
-      <BottomPanel buttonsCallbacks={buttonsCallbacks} time={timer.time}/>
+      <BottomPanel buttonsCallbacks={buttonsCallbacks} timeRef={time}/>
     </>
   )
 }
