@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useState, useRef } from 'react'
+import { useCallback, useMemo, useState, useRef, useEffect } from 'react'
 
 import StartTheoryTest from './StartTheoryTest.jsx';
 import InputTest from './InputTest.jsx';

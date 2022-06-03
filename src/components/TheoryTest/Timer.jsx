@@ -1,4 +1,3 @@
-import {useMemo} from 'react'
 import Styles from '../../styles/TheoryTests/timer.module.scss';  
 
 const parseTime = (time) => {
@@ -9,11 +8,11 @@ const parseTime = (time) => {
   if(sec < 10) sec = '0'+sec;
   return min + ':' + sec;
 }
-function Timer({timeRef}) {
-  const ptime = useMemo(() => parseTime(timeRef.current), [timeRef.current])
+
+function Timer({time}) {
   return (
     <div className={Styles.container}>
-        <span>{ptime}</span>
+        <span>{parseTime(time)}</span>
     </div>
   )
 }

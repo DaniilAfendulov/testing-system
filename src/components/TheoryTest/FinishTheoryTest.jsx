@@ -1,8 +1,12 @@
-import React from 'react'
+import SubmitForm from './SubmitForm.jsx';
 
 function FinishTheoryTest({onClick}) {
   return (
-    <div>FinishTheoryTest</div>
+    <SubmitForm 
+      title={'Вы окончили тестирование! Ваш результат:'}
+      btnText={'Закончить'}
+      onClick={onClick}
+    />
   )
 }
 
