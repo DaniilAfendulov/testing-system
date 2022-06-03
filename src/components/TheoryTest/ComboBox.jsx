@@ -9,7 +9,7 @@ function ComboBox({options, chooseValue}) {
       <div className={Styles.container}>
         <select className={Styles.input} onChange={onChange}>
             <option selected disabled hidden></option>
-            {options.map(option => <option value={option}>{option}</option>)}
+            {options.map((option,i) => <option key={i} value={option}>{option}</option>)}
         </select>
       </div>
   )
