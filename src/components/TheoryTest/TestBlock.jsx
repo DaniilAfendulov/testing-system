@@ -10,7 +10,7 @@ import FinishTheoryTest from './FinishTheoryTest.jsx';
 
 const testFactory = (tests, onSubmitTestHandler, lastTestHandler) => {  
     return tests.map((test, i) => 
-      i === tests.length 
+      i === tests.length-1
       ? mapTest(test, (ans) => lastTestHandler(i, ans))
       : mapTest(test, (ans) => onSubmitTestHandler(i, ans))
     );
