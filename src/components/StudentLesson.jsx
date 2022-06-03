@@ -24,8 +24,8 @@ const videoCardFactory = (isDisabled, url, search) => cardBuilder(isDisabled, '�
 const practiceCardFactory = (isDisabled, url, search) => cardBuilder(isDisabled, 'Практический тест', 'Практический тест недоступен', url+'/practice'+search);
 const theoryCardFactory = (isDisabled, url, search) => cardBuilder(isDisabled, 'Теоретический тест', 'Теоретический тест недоступен', url+'/theory'+search);
 
-const videoCardBlock = (_, url, search) => cardBuilder(true, 'видео', 'Видео недоступно', url+'/video'+search);
-const practiceCardBlock = (_, url, search) => cardBuilder(true, 'Теоретический тест', 'Теоретический тест недоступен', url+'/theory'+search);
+const videoCardBlock = (_, url, search) => videoCardFactory(true, url, search);
+const practiceCardBlock = (_, url, search) => practiceCardFactory(true, url, search);
 
 function StudentLesson() {
   const url = window.location.pathname;
