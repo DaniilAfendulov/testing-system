@@ -2,13 +2,13 @@ import { useCallback } from 'react';
 
 import { getModuleLesson } from '../utils/api.js';
 import { useAsyncGet } from '../utils/useAsyncGet.js';
-import { useLoading } from "../utils/useLoading.js";
 
 import LeftControlsPanel from './ControlsPanel/LeftControlsPanel.jsx';
 import TopControlsPanel from './ControlsPanel/TopControlsPanel.jsx';
 import CardListWindow from './CardListWindow.jsx';
 
 import { leftControls, topControls } from './ControlsPanel/controls.js';
+import LoadingBlock from './DataBlock.jsx';
 
 function StudentModule() {
   const search = window.location.search;
@@ -19,18 +19,16 @@ function StudentModule() {
   const getData = useCallback(() => getModuleLesson(moduleId), [moduleId]);
   const data = useAsyncGet(getData);
 
-  const [isLoading, LoadComponent] = useLoading(data);  
   return (
-    <>
-      { isLoading 
-      ? <>{LoadComponent}</>
-      : <LeftControlsPanel controls={leftControls}>
-          <TopControlsPanel title={data.title} controls={topControls.slice(0,1)}>
-            <CardListWindow cards={data.cards} getPath={getPath}/>
-          </TopControlsPanel>
-        </LeftControlsPanel>
-      }
-    </>
+   <LeftControlsPanel controls={leftControls}>
+        <LoadingBlock data={data}>
+          { data && <>
+            <TopControlsPanel title={data.title} controls={topControls.slice(0,1)}>
+              <CardListWindow cards={data.cards} getPath={getPath}/>
+            </TopControlsPanel>
+          </>}
+        </LoadingBlock>
+    </LeftControlsPanel>
   )
 }
 

@@ -1,8 +1,7 @@
-import { useCallback, useMemo, useState } from 'react'
+import { useCallback, useMemo, useState, useRef } from 'react'
 
 import { getTheoryTest } from '../../utils/api.js';
 import { useAsyncGet } from '../../utils/useAsyncGet.js';
-import { useLoading } from "../../utils/useLoading.js";
 
 import LeftControlsPanel from '../ControlsPanel/LeftControlsPanel.jsx';
 import TopControlsPanel from '../ControlsPanel/TopControlsPanel.jsx';
@@ -14,9 +13,16 @@ import RadioTest from './RadioTest.jsx';
 import CheckBoxTest from './CheckBoxTest.jsx';
 import ComboBoxTest from './ComboBoxTest.jsx';
 import BottomPanel from './BottomPanel.jsx';
+import FinishTheoryTest from './FinishTheoryTest.jsx';
+import LoadingBlock from '../DataBlock.jsx';
 
-const testBuild = (tests, addAnswer) => {  
-  return tests.map((test, i) => mapTest(test, (ans => addAnswer(i, ans))));
+
+const testFactory = (tests, onSubmitTestHandler, lastTestHandler) => {  
+  return tests.map((test, i) => 
+    i === tests.length 
+    ? mapTest(test, (ans) => lastTestHandler(i, ans))
+    : mapTest(test, (ans) => onSubmitTestHandler(i, ans))
+  );
 }
 
 const mapTest = (test, setResult) => {
@@ -39,6 +45,8 @@ function TheoryTest() {
   const lessonId = searchParams.get("id");
   const moduleId = searchParams.get("moduleId");
 
+  const testsComponents = useRef();
+
   topControls[1].path = useMemo(() => '/student/module?id='+moduleId, [moduleId]);
   topControls[2].path = useMemo(() => '/student/lesson'+search, [search]);
 
@@ -46,23 +54,49 @@ function TheoryTest() {
   const data = useAsyncGet(getData);
 
   const [answers, setAnswers] = useState();
-  const addAnswer = useCallback((index, answer) => setAnswers(answer.map((el, i) => i === index ? answer : el)), [setAnswers]);
 
-  const testsComponents = useMemo(() => data ? testBuild(data, addAnswer) : null, [data, addAnswer]);
+  const addAnswer = useCallback((index, answer) => {
+    console.log({ answers,  index, answer});
+    let t = answers.map((el, i) => i === index ? answer : el);
+    console.log(t);
+    setAnswers(t);
+    console.log({ answers,  index, answer})
+  }, [setAnswers, answers]);
+
   const [currentTest, setCurrentTest] = useState(null);
+
+
   const chooseTest = useCallback((index) => {
-    if(testsComponents) setCurrentTest(testsComponents[index]);
-  }, [setCurrentTest, testsComponents]);
-  const buttonsCallbacks = useMemo(() => data ? data.map((_, i) => (e)=>chooseTest(i)) : null, [data, chooseTest]);
+    if(testsComponents.current) setCurrentTest(testsComponents.current[index]);
+  }, [setCurrentTest, testsComponents.current]);
+
+  const testSubmit = useCallback((index, answer) => {
+    addAnswer(index, answer);
+    chooseTest(index+1);
+  }, [addAnswer, chooseTest]);
+  
+  const lastTestSubmit = useCallback((index, answer) => {
+    addAnswer(index, answer);
+    setCurrentTest(<FinishTheoryTest onClick={(e) => console.log(e)}/>)
+  }, [addAnswer, setCurrentTest]);
+
+  testsComponents.current = useMemo(() => 
+    data ? testFactory(data, testSubmit, lastTestSubmit) : null
+  , [data, addAnswer, testSubmit, lastTestSubmit]);
+
+  const buttonsCallbacks = useMemo(() => 
+    data ? data.map((_, i) => (e)=>chooseTest(i)) : null
+  , [data, chooseTest]);
 
   const [timer, setTimer] = useState({timer:null, time:0});
+
   const addSecond = useCallback(() => {
     setTimer({timer: timer.timer, time: timer.time+1});
     console.log(timer)
   }, [timer, setTimer]);
 
   const start = useCallback((e) => {
-    setTimer({timer:setInterval(addSecond, 1000), time:0});
+    //setTimer({timer:setInterval(addSecond, 1000), time:0});
     chooseTest(0);
   }, [setTimer, addSecond, chooseTest]);
 
@@ -70,20 +104,22 @@ function TheoryTest() {
   if(!currentTest){
     setCurrentTest(<StartTheoryTest onClick={start}/>);
   }
+  if(!answers && data){
+    console.log(answers)
+    setAnswers(Array(data.length).fill(null))
+  }
 
-  const [isLoading, LoadComponent] = useLoading(data);
   return (
-    <>
-      { isLoading 
-      ? <>{LoadComponent}</>
-      : <LeftControlsPanel controls={leftControls}>
-          <TopControlsPanel title="Теоретический тест" controls={topControls.slice(0,3)}>
+    <LeftControlsPanel controls={leftControls}>
+      <TopControlsPanel title="Теоретический тест" controls={topControls.slice(0,3)}>
+        <LoadingBlock data={data}>
+          { data && <>
             <>{currentTest}</>
             <BottomPanel buttonsCallbacks={buttonsCallbacks} time={timer.time}/>
-          </TopControlsPanel>
-        </LeftControlsPanel>
-      }
-    </>
+          </>}
+        </LoadingBlock>
+      </TopControlsPanel>
+    </LeftControlsPanel>
   )
 }
 

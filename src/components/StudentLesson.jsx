@@ -2,7 +2,6 @@ import { useCallback, useMemo } from 'react'
 
 import { getLesson } from '../utils/api.js';
 import { useAsyncGet } from '../utils/useAsyncGet.js';
-import { useLoading } from "../utils/useLoading.js";
 
 import LeftControlsPanel from './ControlsPanel/LeftControlsPanel.jsx';
 import TopControlsPanel from './ControlsPanel/TopControlsPanel.jsx';
@@ -12,6 +11,7 @@ import { leftControls, topControls } from './ControlsPanel/controls.js';
 import CardContainer from './CardContainer.jsx';
 import Card from './Card.jsx';
 import LinkCard from './LinkCard.jsx';
+import LoadingBlock from './DataBlock.jsx';
 
 const cardBuilder = (isDisabled, title, disabledDescription, path) => {
   if (isDisabled) {
@@ -39,22 +39,22 @@ function StudentLesson() {
 
   topControls[1].path = useMemo(() => '/student/module?id='+moduleId, [moduleId]);
 
-  const [isLoading, LoadComponent] = useLoading(data);
   return (
-    <>
-      { isLoading 
-      ? <>{LoadComponent}</>
-      : <LeftControlsPanel controls={leftControls}>
-          <TopControlsPanel title={data.title} controls={topControls.slice(0,2)}>        
-            <CardContainer>
-              <>{videoCardBlock(data.isVideoDisabled, url, search)}</>
-              <>{practiceCardBlock(data.isPracticeDisabled, url, search)}</>
-              <>{theoryCardFactory(data.isTheoryDisabled, url, search)}</>
-            </CardContainer>
-          </TopControlsPanel>
-        </LeftControlsPanel>
-      }
-    </>
+    <LeftControlsPanel controls={leftControls}>
+      <LoadingBlock data={data}>
+        { data &&
+          <>
+            <TopControlsPanel title={data.title} controls={topControls.slice(0,2)}>  
+              <CardContainer>
+                <>{videoCardBlock(data.isVideoDisabled, url, search)}</>
+                <>{practiceCardBlock(data.isPracticeDisabled, url, search)}</>
+                <>{theoryCardFactory(data.isTheoryDisabled, url, search)}</>
+              </CardContainer>
+            </TopControlsPanel>
+          </>
+        }
+      </LoadingBlock> 
+    </LeftControlsPanel>
   )
 }
 
