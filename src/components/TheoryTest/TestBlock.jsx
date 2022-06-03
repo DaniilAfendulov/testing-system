@@ -43,7 +43,12 @@ function TestBlock({data}) {
   const timer = useRef();
   const setTimer = useCallback((val) => timer.current = val, [timer]);
   const time = useRef(0);
-  const setTime = useCallback((val) => time.current = val, [time]);
+  const [t, setT] = useState(0);
+  const setTime = useCallback((val) => {
+    time.current = val;
+    setT(val);
+  }, [time]);
+
 
   const testsComponents = useRef();
   const [currentTest, setCurrentTest] = useState(null);
@@ -72,7 +77,6 @@ function TestBlock({data}) {
 
   const addSecond = useCallback(() => {
     setTime(time.current+1);
-    console.log(time.current)
   }, [timer, setTimer]);
 
   const start = useCallback((e) => {
