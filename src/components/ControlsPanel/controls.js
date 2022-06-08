@@ -22,13 +22,13 @@ export const leftControls = [
       altimg: leftContentAlt,
       path:'/student/modules'
     },
-    {
+    /*{
       id:2,
       label:'Статистика',
       img: leftStat,
       altimg: leftStatAlt,
       path:'/student/statistics'
-    },
+    },*/
     {
       id:3,
       label:'Выйти',

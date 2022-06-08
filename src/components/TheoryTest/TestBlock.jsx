@@ -1,4 +1,5 @@
-import { useCallback, useMemo, useState, useRef, useEffect } from 'react'
+import { useCallback, useMemo, useState, useRef } from 'react'
+import { useNavigate } from 'react-router-dom';
 
 import StartTheoryTest from './StartTheoryTest.jsx';
 import InputTest from './InputTest.jsx';
@@ -33,6 +34,7 @@ const testFactory = (tests, onSubmitTestHandler, lastTestHandler) => {
 
 
 function TestBlock({data}) {
+  const navigate = useNavigate();
   const answersRef = useRef(Array(data.length).fill(null));
   const setAnswers = useCallback((val) => answersRef.current = val, [answersRef]);
 
@@ -48,7 +50,9 @@ function TestBlock({data}) {
     time.current = val;
     setT(val);
   }, [time]);
-
+  const stopTimer = useCallback(() => {
+    clearInterval(timer.current);
+  }, [timer]);
 
   const testsComponents = useRef();
   const [currentTest, setCurrentTest] = useState(null);
@@ -62,9 +66,14 @@ function TestBlock({data}) {
     chooseTest(index+1);
   }, [addAnswer, chooseTest]);
   
+  const finishClick = useCallback((e) => {
+    navigate('/student/lesson/'+window.location.search);
+  }, []);
+
   const lastTestSubmit = useCallback((index, answer) => {
     addAnswer(index, answer);
-    setCurrentTest(<FinishTheoryTest onClick={(e) => console.log(e)}/>)
+    stopTimer();
+    setCurrentTest(<FinishTheoryTest onClick={finishClick}/>);
   }, [addAnswer, setCurrentTest]);
 
   testsComponents.current = useMemo(() => 

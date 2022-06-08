@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useState, useRef } from 'react'
+import { useCallback, useMemo } from 'react'
 
 import { getTheoryTest } from '../../utils/api.js';
 import { useAsyncGet } from '../../utils/useAsyncGet.js';
@@ -7,7 +7,6 @@ import LeftControlsPanel from '../ControlsPanel/LeftControlsPanel.jsx';
 import TopControlsPanel from '../ControlsPanel/TopControlsPanel.jsx';
 
 import { leftControls, topControls} from '../ControlsPanel/controls.js';
-import BottomPanel from './BottomPanel.jsx';
 import LoadingBlock from '../DataBlock.jsx';
 import TestBlock from './TestBlock.jsx';
 
