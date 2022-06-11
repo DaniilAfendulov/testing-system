@@ -2,7 +2,7 @@ const API_URL = "https://localhost:5001/api/";
 
 async function apiFetch(search, params, options){
   const url = API_URL+search + (params?'?':'') + new URLSearchParams(params).toString();
-  const response = await fetch(url, {...options, mode: 'cors',credentials: 'include'})
+  const response = await fetch(url, {...options, mode: 'cors', credentials: 'include'})
   .catch(err => failedRequestHandler(err));
   if(response.status === 401){
     unauthorizedResultHandler(response);
@@ -70,7 +70,7 @@ export async function getLesson(moduleId, lessonId){
 }
 
 export async function getTheoryTest(moduleId, lessonId){
-  const response = await apiGet("module/gettests", {moduleId:moduleId, id:lessonId});
+  const response = await apiGet("tests/get", {moduleId:moduleId, id:lessonId});
   if(response.status === 200){
     const tests = await response.json();
     return tests.map(test => parseTest(test));
@@ -101,4 +101,22 @@ export async function auth(login, password){
 
 export async function logout(){
   const response = await apiPost("logout", {});
+}
+
+export async function checkTest(moduleId, lessonId, answers){
+  const response = await apiFetch(
+    "tests/check", 
+    {moduleid:moduleId, lessonid:lessonId},
+    {
+      method: 'POST', 
+      body: JSON.stringify(answers),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }
+  );
+  if(response.status === 200){
+    const result = await response.json();
+    return result;
+  };
 }

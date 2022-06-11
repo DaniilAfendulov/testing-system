@@ -6,7 +6,7 @@ function LoadingBlock({data, children}) {
     <>
     { isLoading 
       ? <>{ LoadComponent }</>
-      : <>{children}</>
+      : <>{ children }</>
     }
     </>
   )

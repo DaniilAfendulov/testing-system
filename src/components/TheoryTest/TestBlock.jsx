@@ -19,15 +19,20 @@ const testFactory = (tests, onSubmitTestHandler, lastTestHandler) => {
   
   const mapTest = (test, setResult) => {
     if(!test) return null;
+    const setAnswer = (answer) => {
+      let res = Array.isArray(answer) ? answer : [answer];
+      res = {ID:test.id, answers:res};
+      setResult(res);
+    }
     switch (test.type) {
       case 0:
-        return <InputTest test={test} setResult={setResult}/>
+        return <InputTest test={test} setResult={setAnswer}/>
       case 1:
-        return <RadioTest test={test} setResult={setResult}/>
+        return <RadioTest test={test} setResult={setAnswer}/>
       case 2:
-        return <CheckBoxTest test={test} setResult={setResult}/>
+        return <CheckBoxTest test={test} setResult={setAnswer}/>
       case 3:
-        return <ComboBoxTest test={test} setResult={setResult}/> 
+        return <ComboBoxTest test={test} setResult={setAnswer}/> 
     }
   }
   
@@ -73,8 +78,8 @@ function TestBlock({data}) {
   const lastTestSubmit = useCallback((index, answer) => {
     addAnswer(index, answer);
     stopTimer();
-    setCurrentTest(<FinishTheoryTest onClick={finishClick}/>);
-  }, [addAnswer, setCurrentTest]);
+    setCurrentTest(<FinishTheoryTest answers={answersRef.current} onClick={finishClick}/>);
+  }, [addAnswer, setCurrentTest, answersRef.current]);
 
   testsComponents.current = useMemo(() => 
     data ? testFactory(data, testSubmit, lastTestSubmit) : null
